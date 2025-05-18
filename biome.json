@@ -26,7 +26,8 @@
         "noUnusedImports": {
           "fix": "safe",
           "level": "warn"
-        }
+        },
+        "noSwitchDeclarations": "off"
       }
     }
   },
