@@ -1,6 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
 // Define plan type enum explicitly
@@ -12,6 +13,7 @@ type PlanData = {
   name: string;
   monthly: number;
   yearly: number;
+  icon: string;
 };
 
 // Define plans object type with specific keys
@@ -84,9 +86,24 @@ function App() {
   });
 
   const plans: Plans = {
-    arcade: { name: "Arcade", monthly: 9, yearly: 90 },
-    advanced: { name: "Advanced", monthly: 12, yearly: 120 },
-    pro: { name: "Pro", monthly: 15, yearly: 150 },
+    arcade: {
+      name: "Arcade",
+      monthly: 9,
+      yearly: 90,
+      icon: "/images/icon-arcade.svg",
+    },
+    advanced: {
+      name: "Advanced",
+      monthly: 12,
+      yearly: 120,
+      icon: "/images/icon-advanced.svg",
+    },
+    pro: {
+      name: "Pro",
+      monthly: 15,
+      yearly: 150,
+      icon: "/images/icon-pro.svg",
+    },
   };
 
   const addons: Addons = {
@@ -235,31 +252,39 @@ function App() {
                     {Object.entries(plans).map(([id, plan]) => (
                       <label
                         key={id}
-                        className={`border-2 p-4 rounded-md cursor-pointer ${
+                        className={`border-2 p-4 rounded-md cursor-pointer flex items-center gap-4 ${
                           field.state.value === id
                             ? "border-[#04285A] bg-[#EEF5FF]"
                             : "border-gray-300"
                         }`}
                       >
-                        <input
-                          type="radio"
-                          name="plan.type"
-                          value={id}
-                          checked={field.state.value === id}
-                          onChange={() => field.handleChange(id as PlanType)}
-                          className="hidden"
-                        />
-                        <p className="font-bold">{plan.name}</p>
-                        <p className="text-gray-500">
-                          $
-                          {form.state.values.plan.billing === "monthly"
-                            ? plan.monthly
-                            : plan.yearly}
-                          /
-                          {form.state.values.plan.billing === "monthly"
-                            ? "mo"
-                            : "yr"}
-                        </p>
+                        <img src={plan.icon} alt={plan.name} />
+                        <div>
+                          <input
+                            type="radio"
+                            name={field.name}
+                            value={id}
+                            checked={field.state.value === id}
+                            onChange={() => field.handleChange(id as PlanType)}
+                            className="hidden"
+                          />
+                          <p className="font-bold">{plan.name}</p>
+                          <p className="text-gray-500">
+                            <form.Subscribe
+                              selector={(state) => state.values.plan.billing}
+                            >
+                              {(billing) => (
+                                <>
+                                  $
+                                  {billing === "monthly"
+                                    ? plan.monthly
+                                    : plan.yearly}
+                                  /{billing === "monthly" ? "mo" : "yr"}
+                                </>
+                              )}
+                            </form.Subscribe>
+                          </p>
+                        </div>
                       </label>
                     ))}
                     {field.state.meta.errors.length > 0 && (
@@ -274,34 +299,42 @@ function App() {
               </form.Field>
               <form.Field name="plan.billing">
                 {(field) => (
-                  <div className="flex justify-center items-center gap-4 bg-[#F8F9FF] p-4 rounded-md">
+                  <div className="flex justify-center items-center gap-4 bg-[#F8F9FF] p-4 rounded -md select-none">
                     <span
-                      className={
+                      className={twMerge(
                         field.state.value === "monthly"
-                          ? "font-bold"
-                          : "text-gray-500"
-                      }
+                          ? "font-bold text-gray-900"
+                          : "font-normal text-gray-500",
+                        "w-20 text-center",
+                      )}
                     >
                       Monthly
                     </span>
-                    <input
-                      type="checkbox"
-                      checked={field.state.value === "yearly"}
-                      onChange={() =>
-                        field.handleChange(
-                          field.state.value === "monthly"
-                            ? "yearly"
-                            : "monthly",
-                        )
-                      }
-                      className="toggle"
-                    />
+
+                    <label className="w-12 h-6 bg-gray-700 rounded-full relative cursor-pointer">
+                      <input
+                        type="checkbox"
+                        id={field.name}
+                        checked={field.state.value === "yearly"}
+                        onChange={() =>
+                          field.handleChange(
+                            field.state.value === "monthly"
+                              ? "yearly"
+                              : "monthly",
+                          )
+                        }
+                        className="sr-only peer"
+                      />
+                      <span className="bg-white transition-all duration-300 rounded-full size-4 absolute left-1 top-1/2 -translate-y-1/2 peer-checked:translate-x-6" />
+                    </label>
+
                     <span
-                      className={
+                      className={twMerge(
                         field.state.value === "yearly"
-                          ? "font-bold"
-                          : "text-gray-500"
-                      }
+                          ? "font-bold text-gray-900"
+                          : "font-normal text-gray-500",
+                        "w-20 text-center",
+                      )}
                     >
                       Yearly
                     </span>
@@ -438,8 +471,6 @@ function App() {
     }
   };
 
-  console.table(form.state.values);
-
   return (
     <form
       onSubmit={(e) => {
@@ -453,7 +484,7 @@ function App() {
       <img src="/images/bg-sidebar-mobile.svg" alt="sidebar-mobile" />
 
       {/* form group */}
-      <div className="relative -mt-36 flex-1 space-y-8">
+      <div key={currentStep} className="relative -mt-36 flex-1 space-y-8">
         <div className="flex justify-center items-center gap-4">
           {[1, 2, 3, 4].map((step) => (
             <button
@@ -479,7 +510,7 @@ function App() {
           <button
             type="button"
             onClick={() => setCurrentStep(currentStep - 1)}
-            className="text-gray-500"
+            className="text-gray-500 hover:cursor-pointer"
           >
             Go Back
           </button>
@@ -487,7 +518,7 @@ function App() {
         <button
           type="button"
           onClick={() => form.handleSubmit()}
-          className="bg-[#04285A] text-white p-4 rounded-lg hover:cursor-pointer hover:bg-[#04285A]/10 ml-auto"
+          className="bg-[#04285A] text-white p-4 rounded-lg hover:cursor-pointer hover:bg-[#04285A]/80 ml-auto"
         >
           {currentStep === 4 ? "Confirm" : "Next Step"}
         </button>
