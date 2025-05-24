@@ -21,6 +21,10 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "style": {
+        "noUnusedTemplateLiteral": "off",
+        "noNonNullAssertion": "off"
+      },
       "recommended": true,
       "correctness": {
         "noUnusedImports": {

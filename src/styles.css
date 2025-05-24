@@ -26,7 +26,12 @@
 }
 
 @theme {
-  --font-family-ubuntu: "Ubuntu", sans-serif;
+  --font-ubuntu: "Ubuntu", sans-serif;
+  --color-primary: hsl(213, 96%, 18%);
+  --color-secondary: hsl(243, 100%, 62%);
+  --color-stepper-active: #bee2fc;
+  --text-tiny: 0.9375rem;
+  --spacing-tiny: 0.9375rem;
 }
 
 body {
