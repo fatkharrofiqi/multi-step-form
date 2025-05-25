@@ -162,9 +162,8 @@ function App() {
             </button>
           )}
           <button
-            type="button"
-            onClick={() => form.handleSubmit()}
-            className={`bg-primary text-white px-[1.375rem] py-3 font-medium rounded-lg hover:cursor-pointer hover:bg-primary/80 ml-auto ${currentStep === 4 && "bg-secondary"}`}
+            type="submit"
+            className={`bg-primary text-white px-[1.375rem] py-3 font-medium rounded-lg hover:cursor-pointer hover:bg-primary/80 active:bg-primary/50 transform duration-200 active:translate-y-1.5 transition-all ml-auto ${currentStep === 4 && "bg-secondary"}`}
           >
             {currentStep === 4 ? "Confirm" : "Next Step"}
           </button>
