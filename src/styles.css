@@ -21,8 +21,8 @@
   font-style: normal;
 }
 
-@utility debug {
-  border: 1px solid red;
+@utility debug-* {
+  border: 2px solid --value("red", "green", "blue");
 }
 
 @theme {
@@ -32,6 +32,7 @@
   --color-stepper-active: #bee2fc;
   --text-tiny: 0.9375rem;
   --spacing-tiny: 0.9375rem;
+  --spacing-medium: 31rem;
 }
 
 body {

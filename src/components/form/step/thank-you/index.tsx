@@ -1,6 +1,6 @@
 export default function ThankYouStep() {
   return (
-    <div className="bg-white m-4 rounded-md p-6 flex flex-col justify-center items-center gap-4 py-20">
+    <div className="bg-white m-4 md:h-full md:m-0 rounded-md p-6 flex flex-col justify-center md:max-w-[24rem] lg:max-w-medium items-center gap-4 py-20">
       <img
         src="/images/icon-thank-you.svg"
         alt="thank-you"

@@ -17,7 +17,7 @@ export default function FinishingStep({
   selectedAddons,
 }: FinishingStepProps) {
   return (
-    <div className="bg-white m-4 rounded-md p-6 max-h-max space-y-5">
+    <div className="bg-white m-4 rounded-md p-6 max-h-max md:max-w-[24rem] lg:min-w-medium space-y-5 md:m-0 md:p-0">
       <p className="font-bold text-2xl text-primary">Finishing up</p>
       <p className="text-gray-500 leading-5">
         Double-check everything looks OK before confirming.

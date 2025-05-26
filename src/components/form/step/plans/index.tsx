@@ -12,7 +12,7 @@ export const PlansStep = withForm({
   },
   render: ({ form, plans }) => {
     return (
-      <div className="bg-white m-4 rounded-md p-6 max-h-max space-y-5">
+      <div className="bg-white m-4 rounded-md p-6 max-h-max md:min-w-[24rem] lg:min-w-medium space-y-5 md:m-0 md:p-0">
         <p className="font-bold text-2xl text-primary">Select your plan</p>
         <p className="text-gray-500 leading-5">
           You have the option of monthly or yearly billing.
@@ -25,7 +25,7 @@ export const PlansStep = withForm({
                   <Label
                     htmlFor={plan.id}
                     key={plan.id}
-                    className={`border-2 p-4 rounded-md cursor-pointer flex items-center gap-4 ${field.state.value === plan.id ? "border-primary bg-white" : "border-gray-300"}`}
+                    className={`border-2 p-4 rounded-md cursor-pointer flex md:flex-col md:items-start md:gap-10 items-center gap-4 ${field.state.value === plan.id ? "border-primary bg-white" : "border-gray-300"}`}
                   >
                     <img
                       src={plan.icon}

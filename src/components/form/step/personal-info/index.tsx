@@ -7,7 +7,7 @@ export const PersonalInfoStep = withForm({
   ...formSubscription,
   render: ({ form }) => {
     return (
-      <div className="bg-white m-4 rounded-md p-6 max-h-max space-y-5">
+      <div className="bg-white m-4 rounded-md p-6 max-h-max md:min-w-[24rem] lg:min-w-medium space-y-5 md:m-0 md:p-0">
         <p className="font-bold text-2xl text-primary">Personal info</p>
         <p className="text-gray-500 leading-5">
           Please provide your name, email, and phone number.

@@ -115,60 +115,90 @@ function App() {
     }
   };
 
+  const steps = [
+    {
+      id: 1,
+      name: "Your Info",
+    },
+    {
+      id: 2,
+      name: "Select Plan",
+    },
+    {
+      id: 3,
+      name: "Add-ons",
+    },
+    {
+      id: 4,
+      name: "Summary",
+    },
+  ];
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        form.handleSubmit();
-      }}
-      className="flex flex-col bg-blue-100 min-h-screen"
-    >
-      {/* image */}
-      <img src="/images/bg-sidebar-mobile.svg" alt="sidebar-mobile" />
-
-      {/* form group */}
-      <div key={currentStep} className="relative -mt-36 flex-1 space-y-8">
-        <div className="flex justify-center items-center gap-4">
-          {[1, 2, 3, 4].map((step) => (
-            <button
-              key={step}
-              type="button"
-              disabled={submitted}
-              onClick={() => setCurrentStep(step)}
-              className={`rounded-full size-8 flex justify-center items-center ${
-                currentStep === step
-                  ? "bg-stepper-active text-black"
-                  : "border-2 border-white text-white"
-              }`}
-            >
-              {step}
-            </button>
-          ))}
+    <div className="bg-blue-100 min-h-screen flex md:flex-col md:justify-center md:items-center">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
+        className="flex-1 flex flex-col md:grid md:grid-cols-[auto_1fr] md:bg-white max-w-max md:flex-none md:gap-4 md:p-4 md:rounded-2xl"
+      >
+        <div className="bg-[url(/images/bg-sidebar-mobile.svg)] h-[180px] md:bg-[url(/images/bg-sidebar-desktop.svg)] bg-cover bg-no-repeat bg-center md:w-[276px] md:min-h-[600px] md:rounded-lg">
+          <div className="flex md:flex-col justify-center items-center md:items-start gap-4 md:gap-8 m-8">
+            {steps.map((step) => (
+              <div key={step.id} className="flex gap-4">
+                <button
+                  type="button"
+                  disabled={submitted}
+                  onClick={() => setCurrentStep(step.id)}
+                  className={`rounded-full size-8 md:size-9 flex justify-center items-center ${
+                    currentStep === step.id
+                      ? "bg-stepper-active text-black"
+                      : "border-2 border-white text-white"
+                  }`}
+                >
+                  {step.id}
+                </button>
+                <div className="hidden md:block uppercase">
+                  <p className="text-gray-300 text-xs">step {step.id}</p>
+                  <p className="text-white text-tiny tracking-tight font-bold">
+                    {step.name}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        {!submitted ? renderStep() : <ThankYouStep />}
-      </div>
 
-      {/* button group */}
-      {!submitted && (
-        <div className="bg-white p-4 flex justify-between items-center mt-auto">
-          {currentStep > 1 && (
-            <button
-              type="button"
-              onClick={() => setCurrentStep(currentStep - 1)}
-              className="text-gray-500 hover:cursor-pointer"
-            >
-              Go Back
-            </button>
+        <div
+          key={currentStep}
+          className="grid grid-rows-[1fr_auto] flex-1 -mt-25 md:mt-0 md:py-10 lg:px-20"
+        >
+          <div>{!submitted ? renderStep() : <ThankYouStep />}</div>
+
+          {/* button group */}
+          {!submitted && (
+            <div className="bg-white p-4 md:p-0 flex justify-between items-center">
+              {currentStep > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                  className="text-gray-500 hover:cursor-pointer active:translate-y-0.5 transition-all"
+                >
+                  Go Back
+                </button>
+              )}
+              <button
+                type="submit"
+                className={`bg-primary text-white px-[1.375rem] py-3 font-medium rounded-lg hover:cursor-pointer hover:bg-primary/80 active:bg-primary/50 transform active:translate-y-0.5 transition-all ml-auto ${currentStep === 4 && "bg-secondary"}`}
+              >
+                {currentStep === 4 ? "Confirm" : "Next Step"}
+              </button>
+            </div>
           )}
-          <button
-            type="submit"
-            className={`bg-primary text-white px-[1.375rem] py-3 font-medium rounded-lg hover:cursor-pointer hover:bg-primary/80 active:bg-primary/50 transform duration-200 active:translate-y-1.5 transition-all ml-auto ${currentStep === 4 && "bg-secondary"}`}
-          >
-            {currentStep === 4 ? "Confirm" : "Next Step"}
-          </button>
         </div>
-      )}
-    </form>
+      </form>
+    </div>
   );
 }
