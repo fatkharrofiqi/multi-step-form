@@ -21,9 +21,9 @@ export const formSchema = z.object({
 export const formSubscription = formOptions({
   defaultValues: {
     personalInfo: {
-      name: "aldo",
-      email: "aldo@al.com",
-      phone: "081231",
+      name: "achmad",
+      email: "achmadfatkharrofiqi404gmail.com",
+      phone: "085155361164",
     },
     plan: {
       type: "arcade" as PlanType,
